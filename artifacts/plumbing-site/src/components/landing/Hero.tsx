@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Star, ShieldCheck } from "lucide-react";
+import { assetUrl } from "@/lib/utils";
 
 export function Hero() {
   return (
@@ -59,7 +60,7 @@ export function Hero() {
           >
             <div className="aspect-[4/5] rounded-2xl overflow-hidden relative shadow-2xl">
               <img 
-                src="/images/hero-bathroom.png" 
+                src={assetUrl("/images/hero-bathroom.png")} 
                 alt="Clean modern bathroom installation" 
                 className="object-cover w-full h-full"
               />

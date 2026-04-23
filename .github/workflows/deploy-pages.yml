@@ -7,21 +7,21 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: github-pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
@@ -43,19 +43,33 @@ jobs:
           BASE_PATH: /plumbing-site/
         run: pnpm --filter @workspace/plumbing-site run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: artifacts/plumbing-site/dist/public
+      - name: Publish site to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+          publish_dir="$(mktemp -d)"
 
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git fetch origin gh-pages
+            git worktree add "$publish_dir" origin/gh-pages
+            cd "$publish_dir"
+            git checkout -B gh-pages origin/gh-pages
+          else
+            git worktree add -B gh-pages "$publish_dir"
+            cd "$publish_dir"
+          fi
+
+          find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+          cp -R "$GITHUB_WORKSPACE/artifacts/plumbing-site/dist/public/." .
+          touch .nojekyll
+
+          git add --all
+
+          if git diff --cached --quiet; then
+            echo "No site changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Deploy site for $GITHUB_SHA"
+          git push origin gh-pages --force

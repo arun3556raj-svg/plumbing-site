@@ -1,26 +1,27 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { assetUrl } from "@/lib/utils";
 
 const projects = [
   {
     title: "Master Bath Remodel",
     category: "Bathroom Installation",
-    image: "/images/project-transformation.png"
+    image: assetUrl("/images/project-transformation.png")
   },
   {
     title: "Vintage Copper Reroute",
     category: "Pipeline Repair",
-    image: "/images/service-plumbing.png"
+    image: assetUrl("/images/service-plumbing.png")
   },
   {
     title: "Subway Tile & Seal",
     category: "Bathroom Grout Work",
-    image: "/images/service-grout.png"
+    image: assetUrl("/images/service-grout.png")
   },
   {
     title: "Emergency Kitchen Fix",
     category: "Kitchen Jam",
-    image: "/images/service-kitchen-jam.png"
+    image: assetUrl("/images/service-kitchen-jam.png")
   }
 ];
 

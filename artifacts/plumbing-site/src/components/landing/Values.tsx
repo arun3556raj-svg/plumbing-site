@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Shield, Clock, PaintBucket } from "lucide-react";
+import { assetUrl } from "@/lib/utils";
 
 export function Values() {
   return (
@@ -59,7 +60,7 @@ export function Values() {
           >
             <div className="aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl relative">
               <img 
-                src="/images/service-plumbing.png" 
+                src={assetUrl("/images/service-plumbing.png")} 
                 alt="Perfectly soldered copper pipes" 
                 className="w-full h-full object-cover"
               />

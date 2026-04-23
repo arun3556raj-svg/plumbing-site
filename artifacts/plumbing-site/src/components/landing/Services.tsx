@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Bath, Droplet, Wrench, Scissors, Grid3X3, Hammer } from "lucide-react";
+import { assetUrl } from "@/lib/utils";
 
 const services = [
   {
@@ -7,7 +8,7 @@ const services = [
     title: "Bathroom Installation",
     desc: "Our flagship service. Full-scale, premium bathroom installation handling everything from demolition to final tile. A studio-quality finish in your home.",
     featured: true,
-    image: "/images/service-bath-install.png"
+    image: assetUrl("/images/service-bath-install.png")
   },
   {
     icon: <Wrench className="w-6 h-6" />,

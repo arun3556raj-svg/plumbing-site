@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { assetUrl } from "@/lib/utils";
 
 const steps = [
   {
@@ -36,7 +37,7 @@ export function Process() {
             className="order-2 lg:order-1 relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg"
           >
             <img 
-              src="/images/process-tradesperson.png" 
+              src={assetUrl("/images/process-tradesperson.png")} 
               alt="Tradesperson working cleanly" 
               className="w-full h-full object-cover"
             />
